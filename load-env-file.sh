@@ -31,7 +31,9 @@ function loadEnvFile() {
           echo "Skipped empty line $counter."
         fi
       fi
-      echo "--------------------"
+      if [ "$2" == "debug" ]; then
+        echo "--------------------"
+      fi
     done <$1
     echo "$1 environment variables file imported."
   else
