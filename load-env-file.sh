@@ -37,6 +37,6 @@ function loadEnvFile() {
     done <$1
     echo "$1 environment variables file imported."
   else
-    echo "$1  environment variables file found."
+    echo "$1  environment variables file not found."
   fi
 }
