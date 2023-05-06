@@ -28,7 +28,7 @@ Function loadEnvFile {
         }
         $name, $value = $lineValueSubs.split('=')
         $exportCommand = "set-content env:\$name $value"
-        $exportCommand = $exportCommand -replace 'ˈ', '\"'
+        $exportCommand = $exportCommand -replace 'ˈ', '"'
         if ($debug -eq "debug") {
           Write-Host "Export Command:`t`t $exportCommand"
         }
