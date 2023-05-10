@@ -27,12 +27,17 @@ Function loadEnvFile {
           Write-Host "Substituted Values:`t $lineValueSubs"
         }
         $name, $value = $lineValueSubs.split('=')
-        $exportCommand = "set-content env:\$name $value"
-        $exportCommand = $exportCommand -replace 'ˈ', '"'
-        if ($debug -eq "debug") {
-          Write-Host "Export Command:`t`t $exportCommand"
+        if (Test-Path env:\$name) {
+          $currentValue = (Get-Item -Path env:\$name).Value
+          Write-Host "$name already has value:`t`t $currentValue"
+        } else {
+          $exportCommand = "set-content env:\$name $value"
+          $exportCommand = $exportCommand -replace 'ˈ', '"'
+          if ($debug -eq "debug") {
+            Write-Host "Export Command:`t`t $exportCommand"
+          }
+          Invoke-Expression $exportCommand
         }
-        Invoke-Expression $exportCommand
       } else {
         if ($debug -eq "debug") {
           Write-Host "Skipped empty line $counter."
