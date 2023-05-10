@@ -73,8 +73,8 @@ Function convertCommandsArrayToString{
 
   $commandsString = ""
   Foreach ($command in $commandsArray){
-    $commandsString += "echo 'remote:$ $command' `n"
-    $commandsString += $command + "`n"
+    $commandsString += "echo `$USER'@remote:$ $command';"
+    $commandsString += $command + ";"
   }
 
   return $commandsString
