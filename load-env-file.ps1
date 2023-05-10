@@ -56,3 +56,26 @@ Function loadEnvFile {
     Write-Host "$envFile environment variables file not found."
   }
 }
+
+Function displayCommandsArray{
+  param(
+    [Parameter(Mandatory=$true)][string[]]$commandsArray
+  )
+  Foreach ($command in $commandsArray){
+    Write-Host "$ $command"
+  }
+}
+
+Function convertCommandsArrayToString{
+  param(
+    [Parameter(Mandatory=$true)][string[]]$commandsArray
+  )
+
+  $commandsString = ""
+  Foreach ($command in $commandsArray){
+    $commandsString += "echo `"$ `" $command `n"
+    $commandsString += $command + "`n"
+  }
+
+  return $commandsString
+}
