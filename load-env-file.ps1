@@ -22,7 +22,11 @@ Function loadEnvFile {
         if ($debug -eq "debug") {
           Write-Host "Read Line ${counter}:`t`t $lineValue"
         }
-        $lineValueSubs = $ExecutionContext.InvokeCommand.ExpandString($lineValue)
+        $lineValueConverted = $lineValue -replace '\${', '${env:'
+        if ($debug -eq "debug") {
+          Write-Host "Converted Line:`t`t $lineValueConverted"
+        }
+        $lineValueSubs = $ExecutionContext.InvokeCommand.ExpandString($lineValueConverted)
         if ($debug -eq "debug") {
           Write-Host "Substituted Values:`t $lineValueSubs"
         }
