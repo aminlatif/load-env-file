@@ -33,7 +33,9 @@ Function loadEnvFile {
         $name, $value = $lineValueSubs.split('=')
         if (Test-Path env:\$name) {
           $currentValue = (Get-Item -Path env:\$name).Value
-          Write-Host "$name already has value:`t`t $currentValue"
+          if ($debug -eq "debug") {
+            Write-Host "$name already has value:`t`t $currentValue"
+          }
         } else {
           $exportCommand = "set-content env:\$name $value"
           $exportCommand = $exportCommand -replace 'ˈ', '"'
@@ -73,7 +75,9 @@ Function convertCommandsArrayToString{
 
   $commandsString = ""
   Foreach ($command in $commandsArray){
-    $commandsString += "echo `$USER'@remote:$ $command';"
+    if (!($command.Contains("echo"))) { 
+      $commandsString += "echo `$USER'@remote:$ $command';"
+    }
     $commandsString += $command + ";"
   }
 
